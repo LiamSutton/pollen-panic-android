@@ -37,9 +37,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         gameThread.start();
 
         surfaceHolder = getHolder();
-
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
-        bee = new Bee(250, 100, 0, 0, beeSprite);
+        bee = new Bee(500, 1500, 0, 0, beeSprite);
     }
 
     @Override
