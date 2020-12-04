@@ -15,4 +15,8 @@ public class Bee extends GameObject {
         sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
         sprite.draw(canvas);
     }
+
+    public void rotationChanged(int zRotation) {
+
+    }
 }

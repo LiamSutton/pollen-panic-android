@@ -16,11 +16,12 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     Thread gameThread;
     boolean isRunning = true;
     Paint backgroundPaint;
+    float[] rotationVector;
 
     Bee bee;
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        rotationVector = new float[3];
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.CYAN);
 
@@ -45,5 +46,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             bee.render(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
+    }
+
+    public void setRotationVector(float xRot, float yRot, float zRot) {
+        rotationVector[0] = xRot;
+        rotationVector[1] = yRot;
+        rotationVector[2] = zRot;
     }
 }

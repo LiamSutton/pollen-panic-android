@@ -1,10 +1,18 @@
 package com.ls.pollenpanic;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +34,34 @@ public class GameFragment extends Fragment {
 
     public GameFragment() {
         // Required empty public constructor
+    }
+    GameSurfaceView gameSurfaceView;
+    SensorManager sensorManager;
+    Sensor gameRotationVector;
+    float gx=0,gy=0,gz=0;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        sensorManager = (SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
+        gameRotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        gameSurfaceView = view.findViewById(R.id.game_surface_view);
+
+        SensorEventListener gameRotationListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                gx=sensorEvent.values[0];
+                gy=sensorEvent.values[1];
+                gz=sensorEvent.values[2];
+
+                gameSurfaceView.setRotationVector(gx,gy,gz);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
     }
 
     /**
