@@ -37,23 +37,22 @@ public class GameFragment extends Fragment {
     }
     GameSurfaceView gameSurfaceView;
     SensorManager sensorManager;
-    Sensor gameRotationVector;
-    float gx=0,gy=0,gz=0;
+    Sensor accelerometer;
+    int xRot;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sensorManager = (SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
-        gameRotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gameSurfaceView = view.findViewById(R.id.game_surface_view);
 
         SensorEventListener gameRotationListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-                gx=sensorEvent.values[0];
-                gy=sensorEvent.values[1];
-                gz=sensorEvent.values[2];
-
-                gameSurfaceView.setRotationVector(gx,gy,gz);
+                if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    xRot = (int)sensorEvent.values[0];
+                    gameSurfaceView.setRotationX(xRot);
+                }
             }
 
             @Override
@@ -61,6 +60,8 @@ public class GameFragment extends Fragment {
 
             }
         };
+
+        sensorManager.registerListener(gameRotationListener,accelerometer,SensorManager.SENSOR_DELAY_GAME);
 
     }
 

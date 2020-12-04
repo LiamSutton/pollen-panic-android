@@ -12,11 +12,22 @@ public class Bee extends GameObject {
     }
 
     public void render(Canvas canvas) {
+        xPosition += xDirection;
+
+        if (xPosition > (canvas.getWidth()-width)) {
+            xPosition = canvas.getWidth()-width;
+        }
+
+        if (xPosition < 0) {
+            xPosition = 0;
+        }
         sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
         sprite.draw(canvas);
     }
 
-    public void rotationChanged(int zRotation) {
+    public void rotationChanged(float xRotation) {
 
+        if (xRotation > 0.0f) xDirection = -10;
+        if (xRotation < 0.0f) xDirection = 10;
     }
 }
