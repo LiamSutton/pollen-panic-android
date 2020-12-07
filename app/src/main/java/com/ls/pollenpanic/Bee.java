@@ -18,8 +18,13 @@ public class Bee extends GameObject implements IMoveable {
 
     public void rotationChanged(float xRotation) {
 
-        if (xRotation > 0.0f) xDirection = -10;
-        if (xRotation < 0.0f) xDirection = 10;
+        if (xRotation > 0.0f) {
+            xDirection = -10;
+        } else if (xRotation < 0.0f) {
+            xDirection = 10;
+        } else {
+            xDirection = 0;
+        }
     }
 
     @Override
