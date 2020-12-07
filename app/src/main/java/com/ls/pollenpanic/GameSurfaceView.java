@@ -22,6 +22,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     int xRot;
 
     Bee bee;
+    Pollen pollen;
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -38,7 +39,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
         surfaceHolder = getHolder();
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
-        bee = new Bee(500, 1500, 0, 0, beeSprite);
+        Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
+        bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
+        pollen = new Pollen(500, 0, 0, 5, 128, 128,pollenSprite);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
             bee.move(canvas);
+            pollen.move(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }

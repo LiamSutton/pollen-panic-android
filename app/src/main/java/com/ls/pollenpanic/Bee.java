@@ -5,11 +5,16 @@ import android.graphics.drawable.Drawable;
 
 
 public class Bee extends GameObject implements IMoveable {
-    int width=128;
-    int height=128;
-    public Bee(float xPosition, float yPosition, float xDirection, float yDirection, Drawable sprite) {
-        super(xPosition, yPosition, xDirection, yDirection, sprite);
+
+    final int WIDTH = 128;
+    final int HEIGHT = 128;
+
+    public Bee(float xPosition, float yPosition, float xDirection, float yDirection, int width, int height, Drawable sprite) {
+        super(xPosition, yPosition, xDirection, yDirection, width, height, sprite);
+        this.width = WIDTH;
+        this.height = HEIGHT;
     }
+
 
     public void rotationChanged(float xRotation) {
 
