@@ -53,7 +53,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             DecimalFormat df = new DecimalFormat("0.00");
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
-            bee.render(canvas);
+            bee.move(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
