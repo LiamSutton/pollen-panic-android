@@ -29,16 +29,18 @@ public class Bee extends GameObject implements IMoveable {
 
     @Override
     public void move(Canvas canvas) {
-        xPosition += xDirection;
-        if (xPosition > (canvas.getWidth()-width)) {
-            xPosition = canvas.getWidth()-width;
-        }
+        if (sprite != null) {
+            xPosition += xDirection;
+            if (xPosition > (canvas.getWidth()-width)) {
+                xPosition = canvas.getWidth()-width;
+            }
 
-        if (xPosition < 0) {
-            xPosition = 0;
-        }
+            if (xPosition < 0) {
+                xPosition = 0;
+            }
 
-        sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
-        sprite.draw(canvas);
+            sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
+            sprite.draw(canvas);
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -60,6 +61,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             DecimalFormat df = new DecimalFormat("0.00");
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
+            checkForCollisions(bee, pollen);
             bee.move(canvas);
             pollen.move(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -69,5 +71,13 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     public void setRotationX(int xRot) {
         this.xRot = xRot;
         bee.rotationChanged(xRot);
+    }
+
+    public void checkForCollisions(Bee bee, Pollen pollen) {
+        Rect r1 = new Rect((int)bee.xPosition, (int)bee.yPosition, (int)(bee.xPosition+bee.width), (int)(bee.yPosition + bee.height));
+        Rect r2 = new Rect((int)pollen.xPosition, (int)pollen.yPosition, (int)(pollen.xPosition+pollen.width), (int)(pollen.yPosition + pollen.height));
+        if (Rect.intersects(r1,r2)) {
+            pollen.sprite = null;
+        }
     }
 }

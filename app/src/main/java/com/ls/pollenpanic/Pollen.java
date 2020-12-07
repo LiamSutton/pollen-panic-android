@@ -14,9 +14,11 @@ public class Pollen extends GameObject implements IMoveable {
 
     @Override
     public void move(Canvas canvas) {
-        yPosition += yDirection;
+        if (sprite != null) {
+            yPosition += yDirection;
 
-        sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
-        sprite.draw(canvas);
+            sprite.setBounds((int)xPosition, (int)yPosition, (int)(xPosition+width), (int)(yPosition+height));
+            sprite.draw(canvas);
+        }
     }
 }
