@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.core.content.ContextCompat;
 
 import java.text.DecimalFormat;
+import java.util.Random;
 
 public class GameSurfaceView extends SurfaceView implements Runnable {
     SurfaceHolder surfaceHolder;
@@ -23,6 +25,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     Bee bee;
     Pollen pollen;
+    Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -33,6 +36,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.CYAN);
+        rand = new Random();
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -41,7 +45,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
-        pollen = new Pollen(500, 0, 0, 5, 128, 128,pollenSprite);
+        pollen = new Pollen(rand.nextInt(1080), 0, 0, 5, 128, 128,pollenSprite);
     }
 
     @Override
