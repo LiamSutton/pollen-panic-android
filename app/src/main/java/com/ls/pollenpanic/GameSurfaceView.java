@@ -25,7 +25,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     int xRot;
 
     Bee bee;
-    Pollen pollen;
+    PollenPool pollenPool;
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -46,7 +46,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
-        pollen = new Pollen(rand.nextInt(1080), 0, 0, 5, 128, 128,pollenSprite);
+        pollenPool = new PollenPool(10);
+        pollenPool.setSprite(pollenSprite);
+        pollenPool.initialise();
     }
 
     @Override
@@ -61,9 +63,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             DecimalFormat df = new DecimalFormat("0.00");
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
-            checkForCollisions(bee, pollen);
+            for (Pollen p : pollenPool.pollenCollection) {
+                checkForCollisions(bee, p);
+            }
             bee.move(canvas);
-            pollen.move(canvas);
+            pollenPool.render(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
