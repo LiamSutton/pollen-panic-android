@@ -64,7 +64,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
             for (Pollen p : pollenPool.pollenCollection) {
-                checkForCollisions(bee, p);
+                boolean collided = checkForCollision(bee, p);
+                if (collided) {
+                    pollenPool.movePollenToBack(p);
+                }
+
             }
             bee.move(canvas);
             pollenPool.render(canvas);
@@ -77,11 +81,14 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         bee.rotationChanged(xRot);
     }
 
-    public void checkForCollisions(Bee bee, Pollen pollen) {
+    public boolean checkForCollision(Bee bee, Pollen pollen) {
         Rect r1 = new Rect((int)bee.xPosition, (int)bee.yPosition, (int)(bee.xPosition+bee.width), (int)(bee.yPosition + bee.height));
         Rect r2 = new Rect((int)pollen.xPosition, (int)pollen.yPosition, (int)(pollen.xPosition+pollen.width), (int)(pollen.yPosition + pollen.height));
         if (Rect.intersects(r1,r2)) {
-            pollen.sprite = null;
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }
