@@ -42,15 +42,16 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.716"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_over_tv"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/submit_score_button"
         android:layout_width="247dp"
         android:layout_height="51dp"
+        android:enabled="false"
         android:text="Submit score"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,5 +81,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_tv"
         app:layout_constraintVertical_bias="0.624" />
+
+    <EditText
+        android:id="@+id/user_name_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/submit_score_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

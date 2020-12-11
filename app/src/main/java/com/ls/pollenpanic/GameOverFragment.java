@@ -10,10 +10,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +44,17 @@ public class GameOverFragment extends Fragment {
     ScoreViewModel scoreViewModel;
     ScoreModel scoreModel;
     TextView scoreTv;
+    EditText userNameEt;
     Button submitScoreBtn;
     Button playAgainBtn;
     Button mainMenuBtn;
+    boolean scoreSubmitted = false;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -50,11 +62,12 @@ public class GameOverFragment extends Fragment {
         navController = Navigation.findNavController(view);
 
         scoreTv = (TextView)view.findViewById(R.id.score_tv);
+        userNameEt = (EditText)view.findViewById(R.id.user_name_et);
         submitScoreBtn = (Button)view.findViewById(R.id.submit_score_button);
         playAgainBtn = (Button)view.findViewById(R.id.play_again_btn);
         mainMenuBtn = (Button)view.findViewById(R.id.main_menu_btn);
-
         scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
+        scoreModel = scoreViewModel.getScoreModel().getValue();
         scoreViewModel.getScoreModel().observe(getViewLifecycleOwner(), new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
@@ -65,7 +78,11 @@ public class GameOverFragment extends Fragment {
         submitScoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Score Submitted :)", Toast.LENGTH_LONG ).show();
+                String name = userNameEt.getText().toString().trim();
+                scoreModel.setUserName(name);
+                String msg = String.format("Score Submitted: Name: %s Score: %d", scoreModel.getUserName(), scoreModel.getScore());
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG ).show();
+                scoreSubmitted = true;
                 submitScoreBtn.setEnabled(false);
             }
         });
@@ -81,6 +98,25 @@ public class GameOverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_gameOverFragment_to_mainMenuFragment);
+            }
+        });
+
+        userNameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() > 0 && !scoreSubmitted) {
+                    submitScoreBtn.setEnabled(true);
+                }
             }
         });
 
