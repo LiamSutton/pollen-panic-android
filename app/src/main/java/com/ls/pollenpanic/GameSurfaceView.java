@@ -9,13 +9,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
 public class GameSurfaceView extends SurfaceView implements Runnable {
@@ -29,6 +30,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     Bee bee;
     PollenCollection pollenCollection;
     PollutionCollection pollutionCollection;
+    NavController navController;
 
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
@@ -38,7 +40,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(128);
         textPaint.setStrokeWidth(6);
-
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.CYAN);
         rand = new Random();
@@ -86,6 +87,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 boolean collided = checkForCollision(bee, p);
                 if (collided) {
                     // Game Over
+                    isRunning = false;
+                    navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
                 }
 
                 if (p.yPosition > canvas.getHeight()) {
@@ -110,5 +113,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Rect r2 = new Rect((int)obj.xPosition, (int)obj.yPosition, (int)(obj.xPosition+obj.width), (int)(obj.yPosition + obj.height));
 
         return Rect.intersects(r1, r2);
+    }
+
+    public void setNavController(View v) {
+        navController = Navigation.findNavController(v);
     }
 }
