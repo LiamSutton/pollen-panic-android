@@ -27,7 +27,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     Bee bee;
     PollenCollection pollenCollection;
-    Pollution pollution;
+    PollutionCollection pollutionCollection;
 
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
@@ -50,7 +50,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
-        pollution = new Pollution(rand.nextInt(952), 0, 0, 5, 128, 128, pollutionSprite);
+        pollutionCollection = new PollutionCollection(10, gridSize);
+        pollutionCollection.setSprite(pollutionSprite);
+        pollutionCollection.initialize();
         pollenCollection = new PollenCollection(10, gridSize);
         pollenCollection.setSprite(pollenSprite);
         pollenCollection.initialise();
@@ -71,12 +73,23 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
                 if (collided || p.yPosition > canvas.getHeight()) {
-                    pollenCollection.resetPollen(p);
+                    pollenCollection.resetPollenPosition(p);
+                }
+            }
+
+            for (Pollution p : pollutionCollection.pollutionCollection) {
+                boolean collided = checkForCollision(bee, p);
+                if (collided) {
+                    // Game Over
+                }
+
+                if (p.yPosition > canvas.getHeight()) {
+                    pollutionCollection.resetPollutionPosition(p);
                 }
             }
             bee.move(canvas);
             pollenCollection.render(canvas);
-            pollution.move(canvas);
+            pollutionCollection.update(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
@@ -86,14 +99,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         bee.rotationChanged(xRot);
     }
 
-    public boolean checkForCollision(Bee bee, Pollen pollen) {
+    public boolean checkForCollision(Bee bee, GameObject obj) {
         Rect r1 = new Rect((int)bee.xPosition, (int)bee.yPosition, (int)(bee.xPosition+bee.width), (int)(bee.yPosition + bee.height));
-        Rect r2 = new Rect((int)pollen.xPosition, (int)pollen.yPosition, (int)(pollen.xPosition+pollen.width), (int)(pollen.yPosition + pollen.height));
-        if (Rect.intersects(r1,r2)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        Rect r2 = new Rect((int)obj.xPosition, (int)obj.yPosition, (int)(obj.xPosition+obj.width), (int)(obj.yPosition + obj.height));
+
+        return Rect.intersects(r1, r2);
     }
 }

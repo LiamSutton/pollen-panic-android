@@ -10,17 +10,20 @@ public class PollutionCollection {
     ArrayList<Pollution> pollutionCollection;
     Random rand;
     Drawable sprite;
-    int furthestBackPollution = 9;
+    int furthestBackIdx;
+    int gridSize;
 
-    public PollutionCollection(int size) {
+    public PollutionCollection(int size, int gridSize) {
         this.pollutionCollection = new ArrayList<Pollution>(size);
+        this.gridSize = gridSize;
         rand = new Random();
+        furthestBackIdx = size-1;
     }
 
     public void initialize() {
         int yPos = -500;
         for (int i = 0; i < 10; i++) {
-            pollutionCollection.add(new Pollution(rand.nextInt(952), yPos, 0, 5, 128, 128, sprite));
+            pollutionCollection.add(new Pollution(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, 128, 128, sprite));
             yPos -= 500;
         }
     }
@@ -31,11 +34,11 @@ public class PollutionCollection {
         }
     }
 
-    public void movePollutionToBack(Pollution p) {
-        Pollution back = pollutionCollection.get(furthestBackPollution);
-        p.xPosition = rand.nextInt(1080);
-        p.yPosition = back.yPosition - 500;
-        furthestBackPollution = pollutionCollection.indexOf(p);
+    public void resetPollutionPosition(Pollution p) {
+        Pollution furthestBack = pollutionCollection.get(furthestBackIdx);
+        p.xPosition = rand.nextInt(gridSize) * Constants.SPRITE_WIDTH;
+        p.yPosition = furthestBack.yPosition - 500;
+        furthestBackIdx = pollutionCollection.indexOf(p);
     }
 
     public void setSprite(Drawable drawable) {

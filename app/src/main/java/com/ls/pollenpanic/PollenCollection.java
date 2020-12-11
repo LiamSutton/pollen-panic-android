@@ -35,9 +35,9 @@ public class PollenCollection {
             p.move(canvas);
         }
     }
-    
 
-    public void resetPollen(Pollen p) {
+
+    public void resetPollenPosition(Pollen p) {
         Pollen furthestBack = pollenCollection.get(furthestbackIdx); // get reference to the currently furthest back Pollen
         p.xPosition = rand.nextInt(gridSize) * Constants.SPRITE_WIDTH; // Pick a new x position on the grid
         p.yPosition = furthestBack.yPosition - 500; // place the Pollen behind the furthest back pollen
