@@ -26,7 +26,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     Bee bee;
     PollenPool pollenPool;
+    Pollution pollution;
+
     Random rand;
+
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -45,7 +48,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         surfaceHolder = getHolder();
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
+        Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
+        pollution = new Pollution(rand.nextInt(952), 0, 0, 5, 128, 128, pollutionSprite);
         pollenPool = new PollenPool(10);
         pollenPool.setSprite(pollenSprite);
         pollenPool.initialise();
@@ -72,6 +77,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             }
             bee.move(canvas);
             pollenPool.render(canvas);
+            pollution.move(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
