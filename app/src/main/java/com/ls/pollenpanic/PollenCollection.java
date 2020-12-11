@@ -8,13 +8,13 @@ import androidx.core.content.res.ResourcesCompat;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PollenPool {
+public class PollenCollection {
     ArrayList<Pollen> pollenCollection;
     Random rand;
     Drawable sprite;
     int lastCollidedWith = 9;
 
-    public PollenPool(int size) {
+    public PollenCollection(int size) {
         this.pollenCollection = new ArrayList<Pollen>(size);
         rand = new Random();
     }

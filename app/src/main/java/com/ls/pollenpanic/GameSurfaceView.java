@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -25,7 +24,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     int xRot;
 
     Bee bee;
-    PollenPool pollenPool;
+    PollenCollection pollenCollection;
     Pollution pollution;
 
     Random rand;
@@ -51,9 +50,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
         pollution = new Pollution(rand.nextInt(952), 0, 0, 5, 128, 128, pollutionSprite);
-        pollenPool = new PollenPool(10);
-        pollenPool.setSprite(pollenSprite);
-        pollenPool.initialise();
+        pollenCollection = new PollenCollection(10);
+        pollenCollection.setSprite(pollenSprite);
+        pollenCollection.initialise();
     }
 
     @Override
@@ -68,15 +67,15 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             DecimalFormat df = new DecimalFormat("0.00");
             String txt = String.format("Current X Rotation = %s", df.format(xRot));
             canvas.drawText(txt, 150, 500, textPaint);
-            for (Pollen p : pollenPool.pollenCollection) {
+            for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
                 if (collided) {
-                    pollenPool.movePollenToBack(p);
+                    pollenCollection.movePollenToBack(p);
                 }
 
             }
             bee.move(canvas);
-            pollenPool.render(canvas);
+            pollenCollection.render(canvas);
             pollution.move(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
