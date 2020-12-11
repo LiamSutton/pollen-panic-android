@@ -89,6 +89,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 if (collided) {
                     // Game Over
                     isRunning = false;
+                    scoreModel.setScore(currentScore);
                     navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
                 }
 

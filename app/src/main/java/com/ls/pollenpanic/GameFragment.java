@@ -48,6 +48,7 @@ public class GameFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
         scoreModel = scoreViewModel.getScoreModel().getValue();
+        gameSurfaceView.setScoreModel(scoreModel);
     }
 
     NavController navController;
@@ -63,7 +64,7 @@ public class GameFragment extends Fragment {
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gameSurfaceView = view.findViewById(R.id.game_surface_view);
         gameSurfaceView.setNavController(view);
-        gameSurfaceView.setScoreModel(scoreModel);
+
 
         SensorEventListener gameRotationListener = new SensorEventListener() {
             @Override

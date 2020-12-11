@@ -2,11 +2,16 @@ package com.ls.pollenpanic;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,22 @@ public class GameOverFragment extends Fragment {
 
     public GameOverFragment() {
         // Required empty public constructor
+    }
+
+    ScoreViewModel scoreViewModel;
+    ScoreModel scoreModel;
+    TextView scoreTv;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        scoreTv = (TextView)view.findViewById(R.id.score_tv);
+        scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
+        scoreViewModel.getScoreModel().observe(getViewLifecycleOwner(), new Observer<ScoreModel>() {
+            @Override
+            public void onChanged(ScoreModel scoreModel) {
+                scoreTv.setText("Final Score: " + scoreModel.getScore());
+            }
+        });
     }
 
     /**
