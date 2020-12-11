@@ -1,12 +1,14 @@
 package com.ls.pollenpanic;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -28,10 +30,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     Pollution pollution;
 
     Random rand;
-
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        int gridSize = Resources.getSystem().getDisplayMetrics().widthPixels / 128;
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(42);
@@ -50,7 +51,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
         bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
         pollution = new Pollution(rand.nextInt(952), 0, 0, 5, 128, 128, pollutionSprite);
-        pollenCollection = new PollenCollection(10);
+        pollenCollection = new PollenCollection(10, gridSize);
         pollenCollection.setSprite(pollenSprite);
         pollenCollection.initialise();
     }
@@ -69,10 +70,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             canvas.drawText(txt, 150, 500, textPaint);
             for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
-                if (collided) {
-                    pollenCollection.movePollenToBack(p);
+                if (collided || p.yPosition > canvas.getHeight()) {
+                    pollenCollection.resetPollen(p);
                 }
-
             }
             bee.move(canvas);
             pollenCollection.render(canvas);

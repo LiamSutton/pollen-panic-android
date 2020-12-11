@@ -12,17 +12,21 @@ public class PollenCollection {
     ArrayList<Pollen> pollenCollection;
     Random rand;
     Drawable sprite;
-    int lastCollidedWith = 9;
+    int baseSpawnYPosition = -500;
+    int gridSize;
+    int furthestbackIdx;
 
-    public PollenCollection(int size) {
+    public PollenCollection(int size, int gridSize) {
         this.pollenCollection = new ArrayList<Pollen>(size);
+        this.gridSize = gridSize;
         rand = new Random();
+        furthestbackIdx = size-1;
     }
 
     public void initialise() {
         int yPos = 0;
         for(int i = 0; i < 10; i++) {
-           pollenCollection.add(new Pollen(rand.nextInt(952), yPos, 0, 5, 128, 128, sprite));
+           pollenCollection.add(new Pollen(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, 128, 128, sprite));
            yPos -= 500;
         }
     }
@@ -31,12 +35,13 @@ public class PollenCollection {
             p.move(canvas);
         }
     }
+    
 
-    public void movePollenToBack(Pollen p) {
-        Pollen back = pollenCollection.get(lastCollidedWith);
-        p.xPosition = rand.nextInt(1080);
-        p.yPosition = back.yPosition - 500;
-        lastCollidedWith = pollenCollection.indexOf(p);
+    public void resetPollen(Pollen p) {
+        Pollen furthestBack = pollenCollection.get(furthestbackIdx); // get reference to the currently furthest back Pollen
+        p.xPosition = rand.nextInt(gridSize) * Constants.SPRITE_WIDTH; // Pick a new x position on the grid
+        p.yPosition = furthestBack.yPosition - 500; // place the Pollen behind the furthest back pollen
+        furthestbackIdx = pollenCollection.indexOf(p); // update the furthest back pollen
     }
 
     public void setSprite(Drawable drawable) {
