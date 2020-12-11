@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -39,6 +40,16 @@ public class GameFragment extends Fragment {
     public GameFragment() {
         // Required empty public constructor
     }
+    ScoreModel scoreModel;
+    ScoreViewModel scoreViewModel;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
+        scoreModel = scoreViewModel.getScoreModel().getValue();
+    }
+
     NavController navController;
     GameSurfaceView gameSurfaceView;
     SensorManager sensorManager;
@@ -52,6 +63,7 @@ public class GameFragment extends Fragment {
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gameSurfaceView = view.findViewById(R.id.game_surface_view);
         gameSurfaceView.setNavController(view);
+        gameSurfaceView.setScoreModel(scoreModel);
 
         SensorEventListener gameRotationListener = new SensorEventListener() {
             @Override

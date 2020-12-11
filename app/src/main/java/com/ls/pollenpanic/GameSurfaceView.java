@@ -31,6 +31,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     PollenCollection pollenCollection;
     PollutionCollection pollutionCollection;
     NavController navController;
+    ScoreModel scoreModel;
 
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
@@ -117,5 +118,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     public void setNavController(View v) {
         navController = Navigation.findNavController(v);
+    }
+
+    public void setScoreModel(ScoreModel sm) {
+        scoreModel = sm;
     }
 }
