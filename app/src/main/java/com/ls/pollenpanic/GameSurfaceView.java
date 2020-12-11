@@ -1,5 +1,6 @@
 package com.ls.pollenpanic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -24,7 +25,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     Paint backgroundPaint;
     Paint textPaint;
     int xRot;
-
+    int currentScore;
     Bee bee;
     PollenCollection pollenCollection;
     PollutionCollection pollutionCollection;
@@ -35,8 +36,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         int gridSize = Resources.getSystem().getDisplayMetrics().widthPixels / 128;
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize(42);
-        textPaint.setStrokeWidth(2);
+        textPaint.setTextSize(128);
+        textPaint.setStrokeWidth(6);
 
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.CYAN);
@@ -56,6 +57,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         pollenCollection = new PollenCollection(10, gridSize);
         pollenCollection.setSprite(pollenSprite);
         pollenCollection.initialise();
+
+        currentScore = 0;
     }
 
     @Override
@@ -69,7 +72,12 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
             for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
-                if (collided || p.yPosition > canvas.getHeight()) {
+                if (collided) {
+                    pollenCollection.resetPollenPosition(p);
+                    currentScore++;
+                }
+
+                if (p.yPosition > canvas.getHeight()) {
                     pollenCollection.resetPollenPosition(p);
                 }
             }
@@ -87,6 +95,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             bee.move(canvas);
             pollenCollection.render(canvas);
             pollutionCollection.update(canvas);
+            canvas.drawText(String.valueOf(currentScore), canvas.getWidth()/2, 200, textPaint);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
