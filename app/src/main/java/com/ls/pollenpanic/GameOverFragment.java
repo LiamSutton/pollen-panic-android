@@ -7,11 +7,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,21 +36,54 @@ public class GameOverFragment extends Fragment {
     public GameOverFragment() {
         // Required empty public constructor
     }
-
+    NavController navController;
     ScoreViewModel scoreViewModel;
     ScoreModel scoreModel;
     TextView scoreTv;
+    Button submitScoreBtn;
+    Button playAgainBtn;
+    Button mainMenuBtn;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
+
         scoreTv = (TextView)view.findViewById(R.id.score_tv);
+        submitScoreBtn = (Button)view.findViewById(R.id.submit_score_button);
+        playAgainBtn = (Button)view.findViewById(R.id.play_again_btn);
+        mainMenuBtn = (Button)view.findViewById(R.id.main_menu_btn);
+
         scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
         scoreViewModel.getScoreModel().observe(getViewLifecycleOwner(), new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
-                scoreTv.setText("Final Score: " + scoreModel.getScore());
+                scoreTv.setText(Integer.toString(scoreModel.getScore()));
             }
         });
+
+        submitScoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Score Submitted :)", Toast.LENGTH_LONG ).show();
+                submitScoreBtn.setEnabled(false);
+            }
+        });
+
+        playAgainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_gameOverFragment_to_gameFragment);
+            }
+        });
+
+        mainMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_gameOverFragment_to_mainMenuFragment);
+            }
+        });
+
     }
 
     /**

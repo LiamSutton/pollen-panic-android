@@ -22,15 +22,63 @@
         app:layout_constraintVertical_bias="0.117" />
 
     <TextView
-        android:id="@+id/score_tv"
+        android:id="@+id/game_over_tooltip_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your score was: "
+        android:text="Final Score"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_over_tv"
-        app:layout_constraintVertical_bias="0.187" />
+        app:layout_constraintVertical_bias="0.12" />
+
+    <TextView
+        android:id="@+id/score_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game_over_tv"
+        app:layout_constraintVertical_bias="0.241" />
+
+    <Button
+        android:id="@+id/submit_score_button"
+        android:layout_width="247dp"
+        android:layout_height="51dp"
+        android:text="Submit score"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_tv"
+        app:layout_constraintVertical_bias="0.201" />
+
+    <Button
+        android:id="@+id/play_again_btn"
+        android:layout_width="247dp"
+        android:layout_height="51dp"
+        android:text="Play Again"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_tv"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <Button
+        android:id="@+id/main_menu_btn"
+        android:layout_width="247dp"
+        android:layout_height="51dp"
+        android:text="Go to main menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_tv"
+        app:layout_constraintVertical_bias="0.624" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
