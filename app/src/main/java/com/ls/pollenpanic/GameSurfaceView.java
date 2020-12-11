@@ -67,9 +67,6 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
             Canvas canvas = surfaceHolder.lockCanvas();
             canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
-            DecimalFormat df = new DecimalFormat("0.00");
-            String txt = String.format("Current X Rotation = %s", df.format(xRot));
-            canvas.drawText(txt, 150, 500, textPaint);
             for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
                 if (collided || p.yPosition > canvas.getHeight()) {

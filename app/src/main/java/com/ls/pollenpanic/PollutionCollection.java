@@ -21,10 +21,10 @@ public class PollutionCollection {
     }
 
     public void initialize() {
-        int yPos = -500;
+        int yPos = -250;
         for (int i = 0; i < 10; i++) {
             pollutionCollection.add(new Pollution(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, 128, 128, sprite));
-            yPos -= 500;
+            yPos -= 750;
         }
     }
 
@@ -37,7 +37,7 @@ public class PollutionCollection {
     public void resetPollutionPosition(Pollution p) {
         Pollution furthestBack = pollutionCollection.get(furthestBackIdx);
         p.xPosition = rand.nextInt(gridSize) * Constants.SPRITE_WIDTH;
-        p.yPosition = furthestBack.yPosition - 500;
+        p.yPosition = furthestBack.yPosition - 750;
         furthestBackIdx = pollutionCollection.indexOf(p);
     }
 
