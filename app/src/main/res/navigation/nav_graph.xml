@@ -42,5 +42,9 @@
         android:id="@+id/leaderboardFragment"
         android:name="com.ls.pollenpanic.leaderboardFragment"
         android:label="fragment_leaderboard"
-        tools:layout="@layout/fragment_leaderboard" />
+        tools:layout="@layout/fragment_leaderboard" >
+        <action
+            android:id="@+id/action_leaderboardFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
 </navigation>

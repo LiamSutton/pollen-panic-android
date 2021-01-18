@@ -7,12 +7,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -60,18 +63,29 @@ public class leaderboardFragment extends Fragment {
     ArrayList<LeaderboardEntry> leaderboardEntries;
     Context context;
     RecyclerView leaderboard_rv;
+    Button main_menu_btn;
+    NavController navController;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         leaderboardEntries = new ArrayList<LeaderboardEntry>();
+        navController = Navigation.findNavController(view);
         context = getContext();
         leaderboard_rv = view.findViewById(R.id.leaderboard_rv);
+        main_menu_btn = (Button)view.findViewById(R.id.leaderboard_to_main_menu_btn);
         db = new DBHelper(context);
         retrieveLeaderboardData();
 
         customAdapter = new CustomAdapter(context, leaderboardEntries);
         leaderboard_rv.setAdapter(customAdapter);
         leaderboard_rv.setLayoutManager(new LinearLayoutManager(context));
+
+        main_menu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_leaderboardFragment_to_mainMenuFragment);
+            }
+        });
     }
 
     void retrieveLeaderboardData() {
