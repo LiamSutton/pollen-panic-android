@@ -1,12 +1,21 @@
 package com.ls.pollenpanic;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +53,37 @@ public class leaderboardFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    DBHelper db;
+    CustomAdapter customAdapter;
+    ArrayList<LeaderboardEntry> leaderboardEntries;
+    Context context;
+    RecyclerView leaderboard_rv;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        leaderboardEntries = new ArrayList<LeaderboardEntry>();
+        context = getContext();
+        leaderboard_rv = view.findViewById(R.id.leaderboard_rv);
+        db = new DBHelper(context);
+        retrieveLeaderboardData();
+
+        customAdapter = new CustomAdapter(context, leaderboardEntries);
+        leaderboard_rv.setAdapter(customAdapter);
+        leaderboard_rv.setLayoutManager(new LinearLayoutManager(context));
+    }
+
+    void retrieveLeaderboardData() {
+        Cursor cursor = db.getHighScores(5);
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(context, "No high scores to display!", Toast.LENGTH_LONG).show();
+        } else {
+            while (cursor.moveToNext()) {
+                leaderboardEntries.add(new LeaderboardEntry(cursor.getShort(0), cursor.getString(1), cursor.getShort(2)));
+            }
+        }
     }
 
     @Override

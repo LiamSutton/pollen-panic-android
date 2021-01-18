@@ -2,6 +2,7 @@ package com.ls.pollenpanic;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String dropDB = String.format("DROP TABLE IF EXISTS %s", TABLE_NAME);
+        String dropDB = String.format("DROP TABLE IF EXISTS %s;", TABLE_NAME);
     }
     public void addNewScore(String userName, int score) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -47,5 +48,22 @@ public class DBHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Score added to the leaderboard.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Cursor getHighScores(int n) {
+        if (n <= 0) {
+            n = 5;
+        }
+        String query = String.format("SELECT * FROM %s ORDER BY %s DESC LIMIT 0,%d;", TABLE_NAME, COLUMN_SCORE, n);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
     }
 }
