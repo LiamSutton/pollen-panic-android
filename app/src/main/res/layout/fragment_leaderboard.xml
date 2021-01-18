@@ -21,23 +21,59 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.044" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/leaderboard_rv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/leaderboard_to_main_menu_btn"
+    <TextView
+        android:id="@+id/leaderboard_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="508dp"
+        android:text="Name"
+        android:textColor="@android:color/black"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.33" />
+
+    <TextView
+        android:id="@+id/leaderboard_user_score_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        android:textColor="@android:color/black"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
+        app:layout_constraintVertical_bias="0.059" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leaderboard_rv"
+        android:layout_width="410dp"
+        android:layout_height="435dp"
+        android:layout_marginTop="107dp"
+        android:layout_marginBottom="160dp"
+        app:layout_constraintBottom_toTopOf="@+id/leaderboard_to_main_menu_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboard_name_tv"
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/leaderboard_to_main_menu_btn"
         android:layout_width="226dp"
         android:layout_height="71dp"
         android:layout_marginBottom="16dp"
-        android:text="Button"
+        android:text="Go Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
+        app:layout_constraintVertical_bias="0.965" />
 </androidx.constraintlayout.widget.ConstraintLayout>

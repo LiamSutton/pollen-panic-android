@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:contentPadding="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,8 +20,9 @@
                 android:id="@+id/leaderboard_username_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:text="Liam"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -33,13 +36,14 @@
                 android:id="@+id/leaderboard_score_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="100"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.785"
+                app:layout_constraintHorizontal_bias="0.942"
                 app:layout_constraintStart_toEndOf="@+id/leaderboard_username_tv"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
