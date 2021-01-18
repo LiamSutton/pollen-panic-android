@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createDB = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT);", TABLE_NAME, COLUMN_ID, COLUMN_USER_NAME, COLUMN_SCORE);
+        String createDB = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s INTEGER);", TABLE_NAME, COLUMN_ID, COLUMN_USER_NAME, COLUMN_SCORE);
         db.execSQL(createDB);
     }
 
@@ -39,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_USER_NAME, userName);
-        contentValues.put(COLUMN_SCORE, String.valueOf(score));
+        contentValues.put(COLUMN_SCORE, score);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
@@ -51,10 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getHighScores(int n) {
-        if (n <= 0) {
-            n = 5;
-        }
-        String query = String.format("SELECT * FROM %s ORDER BY %s DESC LIMIT 0,%d;", TABLE_NAME, COLUMN_SCORE, n);
+        String query = String.format("SELECT * FROM %s ORDER BY %s DESC LIMIT 0,%d", TABLE_NAME, COLUMN_SCORE, n);
 
         SQLiteDatabase db = this.getReadableDatabase();
 
