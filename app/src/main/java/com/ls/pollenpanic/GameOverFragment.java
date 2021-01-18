@@ -1,5 +1,6 @@
 package com.ls.pollenpanic;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -80,8 +81,10 @@ public class GameOverFragment extends Fragment {
             public void onClick(View view) {
                 String name = userNameEt.getText().toString().trim();
                 scoreModel.setUserName(name);
-                String msg = String.format("Score Submitted: Name: %s Score: %d", scoreModel.getUserName(), scoreModel.getScore());
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG ).show();
+                DBHelper db = new DBHelper(getContext());
+
+                db.addNewScore(scoreModel.getUserName(), scoreModel.getScore());
+
                 scoreSubmitted = true;
                 submitScoreBtn.setEnabled(false);
             }
