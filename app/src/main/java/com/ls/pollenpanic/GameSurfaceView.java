@@ -35,6 +35,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     Thread gameThread;
     boolean isRunning = true;
     Paint backgroundPaint;
+    Paint grassPaint;
     Paint textPaint;
     int xRot;
     int currentScore;
@@ -61,7 +62,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         textPaint.setTextSize(128);
         textPaint.setStrokeWidth(6);
         backgroundPaint = new Paint();
-        backgroundPaint.setColor(Color.CYAN);
+        backgroundPaint.setColor(Color.rgb(92, 167, 204));
+        grassPaint = new Paint();
+        grassPaint.setColor(Color.rgb(47, 142, 59));
         rand = new Random();
 
         audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
@@ -74,9 +77,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
         surfaceHolder = getHolder();
+
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
+
         bee = new Bee(500, 1500, 0, 0, 128, 128, beeSprite);
         pollutionCollection = new PollutionCollection(10, gridSize);
         pollutionCollection.setSprite(pollutionSprite);
@@ -97,37 +102,13 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             }
 
             Canvas canvas = surfaceHolder.lockCanvas();
+            drawBackground(canvas);
 
-            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
-            for (Pollen p : pollenCollection.pollenCollection) {
-                boolean collided = checkForCollision(bee, p);
-                if (collided) {
-                    pollenCollection.resetPollenPosition(p);
-                    currentScore++;
-                    gameSoundPool.play(pollenPickupSfx, 1.0f, 1.0f, 1, 0, 1);
-                }
+            checkAllCollisions(canvas);
 
-                if (p.yPosition > canvas.getHeight()) {
-                    pollenCollection.resetPollenPosition(p);
-                }
-            }
-
-            for (Pollution p : pollutionCollection.pollutionCollection) {
-                boolean collided = checkForCollision(bee, p);
-                if (collided) {
-                    // Game Over
-                    gameSoundPool.play(gameOverSfx, 1.0f, 1.0f, 1, 0, 1);
-                    gameOver();
-
-                }
-
-                if (p.yPosition > canvas.getHeight()) {
-                    pollutionCollection.resetPollutionPosition(p);
-                }
-            }
             bee.move(canvas);
-            pollenCollection.render(canvas);
-            pollutionCollection.update(canvas);
+            pollenCollection.move(canvas);
+            pollutionCollection.move(canvas);
             canvas.drawText(String.valueOf(currentScore), canvas.getWidth() / 2, 200, textPaint);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
@@ -135,6 +116,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     }
 
+    void drawBackground(Canvas canvas) {
+        canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
+        canvas.drawRect(0, 0, 275, canvas.getHeight(), grassPaint);
+        canvas.drawRect(canvas.getWidth()-275, 0,canvas.getWidth() ,canvas.getHeight(), grassPaint);
+    }
 
     public void gameOver() {
 
@@ -144,6 +130,34 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         isRunning = false;
 
         navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
+    }
+
+    public void checkAllCollisions(Canvas canvas) {
+        for (Pollen p : pollenCollection.pollenCollection) {
+            boolean collided = checkForCollision(bee, p);
+            if (collided) {
+                pollenCollection.resetPollenPosition(p);
+                currentScore++;
+                gameSoundPool.play(pollenPickupSfx, 1.0f, 1.0f, 1, 0, 1);
+            }
+
+            if (p.yPosition > canvas.getHeight()) {
+                pollenCollection.resetPollenPosition(p);
+            }
+        }
+        for (Pollution p : pollutionCollection.pollutionCollection) {
+            boolean collided = checkForCollision(bee, p);
+            if (collided) {
+                // Game Over
+                gameSoundPool.play(gameOverSfx, 1.0f, 1.0f, 1, 0, 1);
+                gameOver();
+
+            }
+
+            if (p.yPosition > canvas.getHeight()) {
+                pollutionCollection.resetPollutionPosition(p);
+            }
+        }
     }
 
     public void setRotationX(int xRot) {

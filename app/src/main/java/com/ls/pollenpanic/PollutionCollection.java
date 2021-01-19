@@ -28,7 +28,7 @@ public class PollutionCollection {
         }
     }
 
-    public void update(Canvas canvas) {
+    public void move(Canvas canvas) {
         for (Pollution p : pollutionCollection) {
             p.move(canvas);
         }

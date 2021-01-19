@@ -30,7 +30,7 @@ public class PollenCollection {
            yPos -= 500;
         }
     }
-    public void render(Canvas canvas) {
+    public void move(Canvas canvas) {
         for (Pollen p : pollenCollection) {
             p.move(canvas);
         }
