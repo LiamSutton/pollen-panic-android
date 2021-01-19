@@ -43,6 +43,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     SoundPool gameSoundPool;
 
     int pollenPickupSfx;
+    int gameOverSfx;
 
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
@@ -58,7 +59,9 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
         audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
         gameSoundPool = new SoundPool.Builder().setMaxStreams(2).setAudioAttributes(audioAttributes).build();
+
         pollenPickupSfx = gameSoundPool.load(context, R.raw.pollenpickupsfx, 1);
+        gameOverSfx = gameSoundPool.load(context, R.raw.gameoversfx, 1);
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -104,6 +107,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 boolean collided = checkForCollision(bee, p);
                 if (collided) {
                     // Game Over
+                    gameSoundPool.play(gameOverSfx, 1.0f, 1.0f, 1, 0, 1);
                     isRunning = false;
                     scoreModel.setScore(currentScore);
                     navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
