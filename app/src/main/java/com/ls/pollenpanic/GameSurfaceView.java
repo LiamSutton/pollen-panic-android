@@ -9,9 +9,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -21,11 +24,13 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.io.IOException;
 import java.util.Random;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
 public class GameSurfaceView extends SurfaceView implements Runnable {
+
     SurfaceHolder surfaceHolder;
     Thread gameThread;
     boolean isRunning = true;
@@ -41,11 +46,13 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     AudioAttributes audioAttributes;
     SoundPool gameSoundPool;
+    MediaPlayer backgroundMusicMediaPlayer;
 
     int pollenPickupSfx;
     int gameOverSfx;
 
     Random rand;
+
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         int gridSize = Resources.getSystem().getDisplayMetrics().widthPixels / 128;
@@ -59,18 +66,18 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
         audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
         gameSoundPool = new SoundPool.Builder().setMaxStreams(2).setAudioAttributes(audioAttributes).build();
-
+        backgroundMusicMediaPlayer = MediaPlayer.create(context, R.raw.loopingbackgroundmusic);
+        
         pollenPickupSfx = gameSoundPool.load(context, R.raw.pollenpickupsfx, 1);
         gameOverSfx = gameSoundPool.load(context, R.raw.gameoversfx, 1);
 
         gameThread = new Thread(this);
         gameThread.start();
-
         surfaceHolder = getHolder();
         Drawable beeSprite = ContextCompat.getDrawable(context, R.drawable.bee);
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
-        bee = new Bee(500, 1500, 0, 0, 128, 128,beeSprite);
+        bee = new Bee(500, 1500, 0, 0, 128, 128, beeSprite);
         pollutionCollection = new PollutionCollection(10, gridSize);
         pollutionCollection.setSprite(pollutionSprite);
         pollutionCollection.initialize();
@@ -83,13 +90,15 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
+        backgroundMusicMediaPlayer.start();
         while (isRunning) {
             if (!surfaceHolder.getSurface().isValid()) {
                 continue;
             }
 
             Canvas canvas = surfaceHolder.lockCanvas();
-            canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
+
+            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
             for (Pollen p : pollenCollection.pollenCollection) {
                 boolean collided = checkForCollision(bee, p);
                 if (collided) {
@@ -108,9 +117,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 if (collided) {
                     // Game Over
                     gameSoundPool.play(gameOverSfx, 1.0f, 1.0f, 1, 0, 1);
-                    isRunning = false;
-                    scoreModel.setScore(currentScore);
-                    navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
+                    gameOver();
+
                 }
 
                 if (p.yPosition > canvas.getHeight()) {
@@ -120,9 +128,22 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
             bee.move(canvas);
             pollenCollection.render(canvas);
             pollutionCollection.update(canvas);
-            canvas.drawText(String.valueOf(currentScore), canvas.getWidth()/2, 200, textPaint);
+            canvas.drawText(String.valueOf(currentScore), canvas.getWidth() / 2, 200, textPaint);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
+
+
+    }
+
+
+    public void gameOver() {
+
+        backgroundMusicMediaPlayer.stop();
+        backgroundMusicMediaPlayer.release();
+        scoreModel.setScore(currentScore);
+        isRunning = false;
+
+        navController.navigate(R.id.action_gameFragment_to_gameOverFragment);
     }
 
     public void setRotationX(int xRot) {
@@ -131,8 +152,8 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     }
 
     public boolean checkForCollision(Bee bee, GameObject obj) {
-        Rect r1 = new Rect((int)bee.xPosition, (int)bee.yPosition, (int)(bee.xPosition+bee.width), (int)(bee.yPosition + bee.height));
-        Rect r2 = new Rect((int)obj.xPosition, (int)obj.yPosition, (int)(obj.xPosition+obj.width), (int)(obj.yPosition + obj.height));
+        Rect r1 = new Rect((int) bee.xPosition, (int) bee.yPosition, (int) (bee.xPosition + bee.width), (int) (bee.yPosition + bee.height));
+        Rect r2 = new Rect((int) obj.xPosition, (int) obj.yPosition, (int) (obj.xPosition + obj.width), (int) (obj.yPosition + obj.height));
 
         return Rect.intersects(r1, r2);
     }

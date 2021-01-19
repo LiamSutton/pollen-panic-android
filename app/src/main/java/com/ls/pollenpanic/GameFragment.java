@@ -5,15 +5,19 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
@@ -43,6 +47,7 @@ public class GameFragment extends Fragment {
     ScoreModel scoreModel;
     ScoreViewModel scoreViewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -56,6 +61,9 @@ public class GameFragment extends Fragment {
     SensorManager sensorManager;
     Sensor accelerometer;
     int xRot;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -110,6 +118,14 @@ public class GameFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // I dont want the user to exit the game this way
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);;
     }
 
     @Override
