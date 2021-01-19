@@ -8,16 +8,22 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.SoundPool;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import java.util.Random;
+
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
 public class GameSurfaceView extends SurfaceView implements Runnable {
     SurfaceHolder surfaceHolder;
@@ -33,6 +39,11 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
     NavController navController;
     ScoreModel scoreModel;
 
+    AudioAttributes audioAttributes;
+    SoundPool gameSoundPool;
+
+    int pollenPickupSfx;
+
     Random rand;
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +55,10 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         backgroundPaint = new Paint();
         backgroundPaint.setColor(Color.CYAN);
         rand = new Random();
+
+        audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        gameSoundPool = new SoundPool.Builder().setMaxStreams(2).setAudioAttributes(audioAttributes).build();
+        pollenPickupSfx = gameSoundPool.load(context, R.raw.pollenpickupsfx, 1);
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -77,6 +92,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
                 if (collided) {
                     pollenCollection.resetPollenPosition(p);
                     currentScore++;
+                    gameSoundPool.play(pollenPickupSfx, 1.0f, 1.0f, 1, 0, 1);
                 }
 
                 if (p.yPosition > canvas.getHeight()) {
