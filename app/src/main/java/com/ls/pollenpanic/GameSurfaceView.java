@@ -67,7 +67,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         audioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
         gameSoundPool = new SoundPool.Builder().setMaxStreams(2).setAudioAttributes(audioAttributes).build();
         backgroundMusicMediaPlayer = MediaPlayer.create(context, R.raw.loopingbackgroundmusic);
-        
+
         pollenPickupSfx = gameSoundPool.load(context, R.raw.pollenpickupsfx, 1);
         gameOverSfx = gameSoundPool.load(context, R.raw.gameoversfx, 1);
 

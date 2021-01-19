@@ -19,33 +19,20 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <TextView
-        android:id="@+id/game_over_tooltip_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Final Score"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_over_tv"
-        app:layout_constraintVertical_bias="0.12" />
+        app:layout_constraintVertical_bias="0.139" />
 
     <TextView
         android:id="@+id/score_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="Your Score: 0"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_over_tv"
-        app:layout_constraintVertical_bias="0.109" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <Button
         android:id="@+id/submit_score_button"
@@ -55,21 +42,9 @@
         android:text="Submit score"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_tv"
-        app:layout_constraintVertical_bias="0.201" />
-
-    <Button
-        android:id="@+id/play_again_btn"
-        android:layout_width="247dp"
-        android:layout_height="51dp"
-        android:text="Play Again"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_tv"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.357" />
 
     <Button
         android:id="@+id/main_menu_btn"
@@ -80,18 +55,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_tv"
-        app:layout_constraintVertical_bias="0.624" />
+        app:layout_constraintVertical_bias="0.78" />
+
+    <Button
+        android:id="@+id/play_again_btn"
+        android:layout_width="247dp"
+        android:layout_height="51dp"
+        android:text="Play Again"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_tv"
+        app:layout_constraintVertical_bias="0.557" />
 
     <EditText
         android:id="@+id/user_name_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Enter your Name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/submit_score_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/score_tv"
+        app:layout_constraintVertical_bias="0.547" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

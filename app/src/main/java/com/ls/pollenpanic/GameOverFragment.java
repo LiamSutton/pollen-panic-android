@@ -72,7 +72,7 @@ public class GameOverFragment extends Fragment {
         scoreViewModel.getScoreModel().observe(getViewLifecycleOwner(), new Observer<ScoreModel>() {
             @Override
             public void onChanged(ScoreModel scoreModel) {
-                scoreTv.setText(Integer.toString(scoreModel.getScore()));
+                scoreTv.setText("Your Score: " + scoreModel.getScore());
             }
         });
 
