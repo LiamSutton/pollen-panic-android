@@ -44,23 +44,25 @@ public class GameFragment extends Fragment {
     public GameFragment() {
         // Required empty public constructor
     }
-    ScoreModel scoreModel;
-    ScoreViewModel scoreViewModel;
+    ScoreModel scoreModel; // Model containing information about the current games score
+    ScoreViewModel scoreViewModel; // Used to access information regarding the scoreModel
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Instantiate model and pass a reference to the game's surface view
         scoreViewModel = new ViewModelProvider(requireActivity()).get(ScoreViewModel.class);
         scoreModel = scoreViewModel.getScoreModel().getValue();
         gameSurfaceView.setScoreModel(scoreModel);
     }
 
-    NavController navController;
-    GameSurfaceView gameSurfaceView;
-    SensorManager sensorManager;
-    Sensor accelerometer;
-    int xRot;
+    NavController navController; // Used to facilitate navigation
+    GameSurfaceView gameSurfaceView; // A surface view running the game
+    SensorManager sensorManager; // Allows access to the devices sensors
+    Sensor accelerometer; // Specific sensor used to determine devices current rotation
+    int xRot; // stores devices current rotation
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -68,12 +70,14 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+
+        // setup sensors and pass reference to nav controller to game
         sensorManager = (SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gameSurfaceView = view.findViewById(R.id.game_surface_view);
         gameSurfaceView.setNavController(view);
 
-
+        // Listen for changes in rotation and report it to the game
         SensorEventListener gameRotationListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
@@ -122,7 +126,7 @@ public class GameFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // I dont want the user to exit the game this way
+                // Prevents the user from using the back button
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);;

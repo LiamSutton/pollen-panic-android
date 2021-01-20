@@ -15,7 +15,7 @@ public class Bee extends GameObject implements IMoveable {
     /**
      * Updates to movement direction of the Bee according to the rotation of the phone
      *
-     * @param xRotation the current x rotation of the device reported by the gyroscope
+     * @param xRotation the current x rotation of the device reported by the sensors
      */
     public void rotationChanged(float xRotation) {
 
