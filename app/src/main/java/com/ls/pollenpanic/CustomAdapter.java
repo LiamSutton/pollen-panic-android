@@ -12,16 +12,22 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import java.util.ArrayList;
 
+
+/**
+ * CustomAdapter is responsible for populating the RecyclerView with LeaderboardEntries
+ */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
-    private Context context;
-    private ArrayList<LeaderboardEntry> leaderboardEntries;
+    private Context context; // Current context
+    private ArrayList<LeaderboardEntry> leaderboardEntries; // A list of LeaderboardEntries
 
+    // Constructor
     CustomAdapter(Context context, ArrayList<LeaderboardEntry> leaderboardEntries) {
         this.context = context;
         this.leaderboardEntries = leaderboardEntries;
     }
 
+    // Inflates the view using a custom card layout
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,6 +36,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return new MyViewHolder(view);
     }
 
+    // Sets the values in the card for each given LeaderboardEntry
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         LeaderboardEntry leaderboardEntry = leaderboardEntries.get(position);
@@ -42,6 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return leaderboardEntries.size();
     }
 
+    // Inner class which gets a reference to the Widgets in a card
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView leaderboard_username_tv, leaderboard_score_tv;
         public MyViewHolder(@NonNull View itemView) {
