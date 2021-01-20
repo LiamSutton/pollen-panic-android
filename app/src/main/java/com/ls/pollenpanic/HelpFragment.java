@@ -15,10 +15,10 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainMenuFragment#newInstance} factory method to
+ * Use the {@link HelpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainMenuFragment extends Fragment {
+public class HelpFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class MainMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MainMenuFragment() {
+    public HelpFragment() {
         // Required empty public constructor
     }
 
@@ -39,16 +39,32 @@ public class MainMenuFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainMenuFragment.
+     * @return A new instance of fragment HelpFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainMenuFragment newInstance(String param1, String param2) {
-        MainMenuFragment fragment = new MainMenuFragment();
+    public static HelpFragment newInstance(String param1, String param2) {
+        HelpFragment fragment = new HelpFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    Button help_main_menu_btn;
+    NavController navController;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        help_main_menu_btn = (Button)view.findViewById(R.id.help_main_menu_btn);
+        navController = Navigation.findNavController(view);
+
+        help_main_menu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_helpFragment_to_mainMenuFragment);
+            }
+        });
     }
 
     @Override
@@ -64,41 +80,6 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_menu, container, false);
-    }
-
-    Button startGameBtn;
-    Button leaderboardBtn;
-    Button helpBtn;
-    NavController navController;
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        navController = Navigation.findNavController(view);
-        startGameBtn = (Button)view.findViewById(R.id.start_game_btn);
-        leaderboardBtn = (Button)view.findViewById(R.id.leaderboard_btn);
-        helpBtn = (Button)view.findViewById(R.id.help_btn);
-
-        startGameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_mainMenuFragment_to_gameFragment);
-            }
-        });
-
-        leaderboardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_mainMenuFragment_to_leaderboardFragment);
-            }
-        });
-
-        helpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_mainMenuFragment_to_helpFragment);
-            }
-        });
+        return inflater.inflate(R.layout.fragment_help, container, false);
     }
 }
