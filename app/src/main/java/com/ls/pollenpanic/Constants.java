@@ -8,4 +8,10 @@ public class Constants {
     static final int DIRECTION_NONE = 0;
     static final float ROTATION_THRESHOLD = 0.0f;
 
+    static final int POLLEN_START_POSITION = 0;
+    static final int POLLUTION_START_POSITION = -250;
+
+    static final int POLLEN_PLACEMENT_DISTANCE = 500;
+    static final int POLLUTION_PLACEMENT_DISTANCE = 750;
+
 }

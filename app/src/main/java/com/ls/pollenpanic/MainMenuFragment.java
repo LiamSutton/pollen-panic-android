@@ -67,21 +67,23 @@ public class MainMenuFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main_menu, container, false);
     }
 
-    Button startGameBtn;
-    Button leaderboardBtn;
-    Button helpBtn;
-    Button aboutBtn;
-    NavController navController;
+    Button startGameBtn; // used to start the game
+    Button leaderboardBtn; // used to load the leaderboard
+    Button helpBtn; // used to show helpful instructions
+    Button aboutBtn; // used to show information about bees
+    NavController navController; // facilitates navigation
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // get references
         navController = Navigation.findNavController(view);
         startGameBtn = (Button)view.findViewById(R.id.start_game_btn);
         leaderboardBtn = (Button)view.findViewById(R.id.leaderboard_btn);
         helpBtn = (Button)view.findViewById(R.id.help_btn);
         aboutBtn = (Button)view.findViewById(R.id.about_btn);
 
+        // start the game
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +91,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        // load the leaderboard
         leaderboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +99,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        // show helpful instructions
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +107,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        // show cool facts about bees
         aboutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

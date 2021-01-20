@@ -1,5 +1,6 @@
 package com.ls.pollenpanic;
 
+// used to model a leaderboard entry
 public class ScoreModel {
     private int score;
     private String userName;

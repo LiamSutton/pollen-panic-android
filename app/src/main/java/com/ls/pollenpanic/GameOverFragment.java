@@ -41,15 +41,15 @@ public class GameOverFragment extends Fragment {
     public GameOverFragment() {
         // Required empty public constructor
     }
-    NavController navController;
-    ScoreViewModel scoreViewModel;
-    ScoreModel scoreModel;
-    TextView scoreTv;
-    EditText userNameEt;
-    Button submitScoreBtn;
-    Button playAgainBtn;
-    Button mainMenuBtn;
-    boolean scoreSubmitted = false;
+    NavController navController; // Used to facilitate navigation
+    ScoreViewModel scoreViewModel; // contains information about users current game
+    ScoreModel scoreModel; // model storing information on users current game
+    TextView scoreTv; // used to display the final score
+    EditText userNameEt; // allows the user to enter their name to be put on the leaderboard
+    Button submitScoreBtn; // submits the users name and score to the database
+    Button playAgainBtn; // restarts the game
+    Button mainMenuBtn; // returns the user to the main menu
+    boolean scoreSubmitted = false; // used to prevent multiple score submissions
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class GameOverFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // get references to widgets and initialise score model
         navController = Navigation.findNavController(view);
 
         scoreTv = (TextView)view.findViewById(R.id.score_tv);
@@ -76,6 +77,7 @@ public class GameOverFragment extends Fragment {
             }
         });
 
+        // Submits the current name and score to the database
         submitScoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +92,7 @@ public class GameOverFragment extends Fragment {
             }
         });
 
+        // restarts the game
         playAgainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,6 +100,7 @@ public class GameOverFragment extends Fragment {
             }
         });
 
+        // returns the user to the main menu
         mainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +119,7 @@ public class GameOverFragment extends Fragment {
 
             }
 
+            // if a score has been submitted or the textbox is empty the submit button will be disabled
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0 && !scoreSubmitted) {

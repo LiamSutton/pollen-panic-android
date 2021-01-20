@@ -1,5 +1,6 @@
 package com.ls.pollenpanic;
 
+// encapsulates the information required for a leaderboard submission
 public class LeaderboardEntry {
 
     private int id;

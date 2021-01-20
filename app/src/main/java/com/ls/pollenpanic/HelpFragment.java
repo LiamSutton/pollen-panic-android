@@ -51,14 +51,17 @@ public class HelpFragment extends Fragment {
         return fragment;
     }
 
-    Button helpMainMenuBtn;
-    NavController navController;
+    Button helpMainMenuBtn; // used to return to main menu
+    NavController navController; // used to facilitate navigation
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // get references
         helpMainMenuBtn = (Button)view.findViewById(R.id.help_main_menu_btn);
         navController = Navigation.findNavController(view);
 
+        // return the user to the main menu
         helpMainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

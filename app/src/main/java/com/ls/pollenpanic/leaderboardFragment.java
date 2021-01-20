@@ -58,28 +58,32 @@ public class leaderboardFragment extends Fragment {
         return fragment;
     }
 
-    DBHelper db;
-    CustomAdapter customAdapter;
-    ArrayList<LeaderboardEntry> leaderboardEntries;
-    Context context;
-    RecyclerView leaderboard_rv;
-    Button mainMenuBtn;
-    NavController navController;
+    DBHelper db; // used to query the database
+    CustomAdapter customAdapter; // used to populate the recyclerview with leaderboard entries
+    ArrayList<LeaderboardEntry> leaderboardEntries; // contains all loaded data from the db
+    Context context; // current context
+    RecyclerView leaderboard_rv; // holds leaderboard entries
+    Button mainMenuBtn; // used to return to the main menu
+    NavController navController; // used to facilitate navigation
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // perform initialisations and get references
         leaderboardEntries = new ArrayList<LeaderboardEntry>();
         navController = Navigation.findNavController(view);
         context = getContext();
         leaderboard_rv = (RecyclerView)view.findViewById(R.id.leaderboard_rv);
         mainMenuBtn = (Button)view.findViewById(R.id.leaderboard_to_main_menu_btn);
-        db = new DBHelper(context);
-        retrieveLeaderboardData();
 
+        db = new DBHelper(context);
+        retrieveLeaderboardData(); // fill the arraylist with leaderboard entries
+
+        // initialise adapter and set data source for the leaderboard
         customAdapter = new CustomAdapter(context, leaderboardEntries);
         leaderboard_rv.setAdapter(customAdapter);
         leaderboard_rv.setLayoutManager(new LinearLayoutManager(context));
 
+        // return the user to the main menu
         mainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +92,7 @@ public class leaderboardFragment extends Fragment {
         });
     }
 
+    // grabs the top n leaderboard entries and uses them to populate the array list
     void retrieveLeaderboardData() {
         Cursor cursor = db.getTopHighScores(5);
 
