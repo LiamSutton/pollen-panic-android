@@ -51,15 +51,15 @@ public class HelpFragment extends Fragment {
         return fragment;
     }
 
-    Button help_main_menu_btn;
+    Button helpMainMenuBtn;
     NavController navController;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        help_main_menu_btn = (Button)view.findViewById(R.id.help_main_menu_btn);
+        helpMainMenuBtn = (Button)view.findViewById(R.id.help_main_menu_btn);
         navController = Navigation.findNavController(view);
 
-        help_main_menu_btn.setOnClickListener(new View.OnClickListener() {
+        helpMainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_helpFragment_to_mainMenuFragment);

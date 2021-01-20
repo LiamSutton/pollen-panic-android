@@ -63,7 +63,7 @@ public class leaderboardFragment extends Fragment {
     ArrayList<LeaderboardEntry> leaderboardEntries;
     Context context;
     RecyclerView leaderboard_rv;
-    Button main_menu_btn;
+    Button mainMenuBtn;
     NavController navController;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class leaderboardFragment extends Fragment {
         navController = Navigation.findNavController(view);
         context = getContext();
         leaderboard_rv = view.findViewById(R.id.leaderboard_rv);
-        main_menu_btn = (Button)view.findViewById(R.id.leaderboard_to_main_menu_btn);
+        mainMenuBtn = (Button)view.findViewById(R.id.leaderboard_to_main_menu_btn);
         db = new DBHelper(context);
         retrieveLeaderboardData();
 
@@ -80,7 +80,7 @@ public class leaderboardFragment extends Fragment {
         leaderboard_rv.setAdapter(customAdapter);
         leaderboard_rv.setLayoutManager(new LinearLayoutManager(context));
 
-        main_menu_btn.setOnClickListener(new View.OnClickListener() {
+        mainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_leaderboardFragment_to_mainMenuFragment);
