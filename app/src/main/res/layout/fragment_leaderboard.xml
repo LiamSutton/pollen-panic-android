@@ -11,7 +11,7 @@
         android:id="@+id/leaderboard_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top 5 Hi-Scores"
+        android:text="Top Hi-Scores"
         android:textColor="@android:color/black"
         android:textSize="42sp"
         android:textStyle="bold"
@@ -76,8 +76,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
-        app:layout_constraintVertical_bias="0.965" />
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

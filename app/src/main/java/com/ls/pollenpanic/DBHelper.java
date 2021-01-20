@@ -50,7 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getHighScores(int n) {
+    public Cursor getTopHighScores(int n) {
         String query = String.format("SELECT * FROM %s ORDER BY %s DESC LIMIT 0,%d", TABLE_NAME, COLUMN_SCORE, n);
 
         SQLiteDatabase db = this.getReadableDatabase();

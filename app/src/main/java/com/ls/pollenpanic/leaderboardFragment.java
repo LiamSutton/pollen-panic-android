@@ -71,7 +71,7 @@ public class leaderboardFragment extends Fragment {
         leaderboardEntries = new ArrayList<LeaderboardEntry>();
         navController = Navigation.findNavController(view);
         context = getContext();
-        leaderboard_rv = view.findViewById(R.id.leaderboard_rv);
+        leaderboard_rv = (RecyclerView)view.findViewById(R.id.leaderboard_rv);
         mainMenuBtn = (Button)view.findViewById(R.id.leaderboard_to_main_menu_btn);
         db = new DBHelper(context);
         retrieveLeaderboardData();
@@ -89,7 +89,7 @@ public class leaderboardFragment extends Fragment {
     }
 
     void retrieveLeaderboardData() {
-        Cursor cursor = db.getHighScores(5);
+        Cursor cursor = db.getTopHighScores(5);
 
         if (cursor.getCount() == 0) {
             Toast.makeText(context, "No high scores to display!", Toast.LENGTH_LONG).show();
