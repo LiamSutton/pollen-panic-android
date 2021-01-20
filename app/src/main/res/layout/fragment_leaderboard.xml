@@ -67,8 +67,8 @@
 
     <Button
         android:id="@+id/leaderboard_to_main_menu_btn"
-        android:layout_width="226dp"
-        android:layout_height="71dp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/black"
         android:text="Go Back"
@@ -76,8 +76,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.981" />
 </androidx.constraintlayout.widget.ConstraintLayout>
