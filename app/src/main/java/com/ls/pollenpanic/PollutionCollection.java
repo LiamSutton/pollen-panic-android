@@ -23,7 +23,7 @@ public class PollutionCollection {
     public void initialize() {
         int yPos = -250;
         for (int i = 0; i < 10; i++) {
-            pollutionCollection.add(new Pollution(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, 128, 128, sprite));
+            pollutionCollection.add(new Pollution(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, sprite));
             yPos -= 750;
         }
     }

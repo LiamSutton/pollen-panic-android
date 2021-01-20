@@ -12,7 +12,6 @@ public class PollenCollection {
     ArrayList<Pollen> pollenCollection;
     Random rand;
     Drawable sprite;
-    int baseSpawnYPosition = -500;
     int gridSize;
     int furthestbackIdx;
 
@@ -26,7 +25,7 @@ public class PollenCollection {
     public void initialise() {
         int yPos = 0;
         for(int i = 0; i < 10; i++) {
-           pollenCollection.add(new Pollen(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, 128, 128, sprite));
+           pollenCollection.add(new Pollen(rand.nextInt(gridSize) * Constants.SPRITE_WIDTH, yPos, 0, 5, sprite));
            yPos -= 500;
         }
     }

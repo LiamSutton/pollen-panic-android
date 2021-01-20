@@ -6,27 +6,33 @@ import android.graphics.drawable.Drawable;
 
 public class Bee extends GameObject implements IMoveable {
 
-    final int WIDTH = 128;
-    final int HEIGHT = 128;
-
-    public Bee(float xPosition, float yPosition, float xDirection, float yDirection, int width, int height, Drawable sprite) {
-        super(xPosition, yPosition, xDirection, yDirection, width, height, sprite);
-        this.width = WIDTH;
-        this.height = HEIGHT;
+    // Constructor for Bee Object
+    public Bee(float xPosition, float yPosition, float xDirection, float yDirection, Drawable sprite) {
+        super(xPosition, yPosition, xDirection, yDirection, sprite);
     }
 
 
+    /**
+     * Updates to movement direction of the Bee according to the rotation of the phone
+     *
+     * @param xRotation the current x rotation of the device reported by the gyroscope
+     */
     public void rotationChanged(float xRotation) {
 
-        if (xRotation > 0.0f) {
-            xDirection = -10;
-        } else if (xRotation < 0.0f) {
-            xDirection = 10;
+        if (xRotation > Constants.ROTATION_THRESHOLD) {
+            xDirection = Constants.DIRECTION_RIGHT;
+        } else if (xRotation < Constants.ROTATION_THRESHOLD) {
+            xDirection = Constants.DIRECTION_LEFT;
         } else {
-            xDirection = 0;
+            xDirection = Constants.DIRECTION_NONE;
         }
     }
 
+    /**
+     * Prevents the Bee from going out of bounds and draws it to the screen
+     *
+     * @param canvas a valid canvas to draw on
+     */
     @Override
     public void move(Canvas canvas) {
         if (sprite != null) {

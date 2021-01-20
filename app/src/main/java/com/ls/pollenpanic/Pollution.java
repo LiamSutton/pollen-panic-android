@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable;
 
 public class Pollution extends GameObject implements IMoveable {
 
-    public Pollution(float xPosition, float yPosition, float xDirection, float yDirection, int width, int height, Drawable sprite) {
-        super(xPosition, yPosition, xDirection, yDirection, width, height, sprite);
+    public Pollution(float xPosition, float yPosition, float xDirection, float yDirection, Drawable sprite) {
+        super(xPosition, yPosition, xDirection, yDirection, sprite);
     }
 
     @Override

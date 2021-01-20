@@ -51,14 +51,18 @@ public class AboutFragment extends Fragment {
         return fragment;
     }
 
-    Button aboutMainMenuBtn;
-    NavController navController;
+    Button aboutMainMenuBtn; // Used to take the user to the main menu
+    NavController navController; // Used to facilitate navigation
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        aboutMainMenuBtn = (Button)view.findViewById(R.id.about_main_menu_btn);
+
+        // Get references
+        aboutMainMenuBtn = (Button) view.findViewById(R.id.about_main_menu_btn);
         navController = Navigation.findNavController(view);
 
+        // Set on click to navigate to the main menu
         aboutMainMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

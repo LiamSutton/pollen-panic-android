@@ -83,7 +83,7 @@ public class GameSurfaceView extends SurfaceView implements Runnable {
         Drawable pollenSprite = ContextCompat.getDrawable(context, R.drawable.pollen);
         Drawable pollutionSprite = ContextCompat.getDrawable(context, R.drawable.pollution);
 
-        bee = new Bee(500, 1500, 0, 0, 128, 128, beeSprite);
+        bee = new Bee(500, 1500, 0, 0, beeSprite);
         pollutionCollection = new PollutionCollection(10, gridSize);
         pollutionCollection.setSprite(pollutionSprite);
         pollutionCollection.initialize();
