@@ -70,6 +70,7 @@ public class MainMenuFragment extends Fragment {
     Button startGameBtn;
     Button leaderboardBtn;
     Button helpBtn;
+    Button aboutBtn;
     NavController navController;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class MainMenuFragment extends Fragment {
         startGameBtn = (Button)view.findViewById(R.id.start_game_btn);
         leaderboardBtn = (Button)view.findViewById(R.id.leaderboard_btn);
         helpBtn = (Button)view.findViewById(R.id.help_btn);
+        aboutBtn = (Button)view.findViewById(R.id.about_btn);
 
         startGameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +100,13 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_mainMenuFragment_to_helpFragment);
+            }
+        });
+
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_mainMenuFragment_to_aboutFragment);
             }
         });
     }
