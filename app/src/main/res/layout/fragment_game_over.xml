@@ -68,7 +68,7 @@
         android:id="@+id/play_again_btn"
         android:layout_width="247dp"
         android:layout_height="51dp"
-        android:background="#FFBF02"
+        android:background="@color/yellow"
         android:text="Play Again"
         android:textColor="@android:color/white"
         android:textStyle="bold"

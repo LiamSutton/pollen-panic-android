@@ -11,7 +11,7 @@
         android:id="@+id/leaderboard_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leaderboard"
+        android:text="Top 5 Hi-Scores"
         android:textColor="@android:color/black"
         android:textSize="42sp"
         android:textStyle="bold"
@@ -32,25 +32,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
-        app:layout_constraintVertical_bias="0.33" />
+        app:layout_constraintVertical_bias="0.504" />
 
     <TextView
-        android:id="@+id/leaderboard_user_score_tv"
+        android:id="@+id/leaderboard_score_label_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="508dp"
         android:text="Score"
         android:textColor="@android:color/black"
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboard_title_tv"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.504" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leaderboard_rv"

@@ -26,7 +26,7 @@
         android:id="@+id/start_game_btn"
         android:layout_width="211dp"
         android:layout_height="58dp"
-        android:background="#FFBF02"
+        android:background="@color/yellow"
         android:text="Start Game!"
         android:textColor="@android:color/white"
         android:textStyle="bold"
